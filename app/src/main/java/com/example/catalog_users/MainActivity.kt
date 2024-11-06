@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.ListView
 import androidx.appcompat.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -30,11 +31,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.exit -> finish()
 
-        }
-
+                 val builder = AlertDialog.Builder(this)
+                 builder.setTitle("Выход из программы").setMessage("Действительно выйти?").setCancelable(true)
+                        .setNegativeButton("Нет"){dialog,which -> dialog.cancel()}
+                        .setPositiveButton("Да") {dialog,whitch -> finish() }.create()
+                 builder.show()
         return super.onOptionsItemSelected(item)
     }
 
@@ -66,11 +68,8 @@ class MainActivity : AppCompatActivity() {
                     // list.add(Users(name.text.toString(),age.text.toString()))
                      adapter.notifyDataSetChanged()
                      name.text.clear();age.text.clear() }
-                listTv.onItemClickListener = AdapterView.OnItemClickListener{s,v,position,id->
 
-                    val note = adapter.getItem(position)
-                    adapter.remove(note)
-                }
+                listTv.onItemClickListener = MyDialjg.myDialog(this,adapter)
     }
 
 }
